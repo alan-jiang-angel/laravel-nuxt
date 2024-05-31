@@ -11,6 +11,10 @@ export default defineAppConfig({
       default: {
         icon: 'i-heroicons-user',
       }
+    },
+    notifications: {
+      // Show toasts at the top right of the screen
+      position: 'top-0 bottom-auto right-0'
     }
   }
 })
