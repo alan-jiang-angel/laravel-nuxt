@@ -2,6 +2,10 @@
 export default defineNuxtConfig({
   srcDir: 'nuxt/',
 
+  plugins: [
+    '~/plugins/vue-datepicker.js'
+  ],
+
   /**
    * Manually disable nuxt telemetry.
    * @see [Nuxt Telemetry](https://github.com/nuxt/telemetry) for more information.
