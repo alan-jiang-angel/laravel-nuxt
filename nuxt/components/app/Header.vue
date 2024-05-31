@@ -33,22 +33,29 @@ const userItems = [
 
 const navItems = [
   {
-    label: "Nuxt.js Docs",
-    to: "https://nuxt.com/docs/getting-started/introduction",
-    target: "_blank",
-    icon: "i-heroicons-link-20-solid",
+    label: "My publications",
+    to: "/publications",
+    icon: "i-heroicons-arrow-right-on-rectangle",
   },
   {
-    label: "Nuxt UI",
-    to: "https://ui.nuxt.com/getting-started",
-    target: "_blank",
-    icon: "i-heroicons-link-20-solid",
+    label: "Customer Reviews",
+    to: "/publications",
+    icon: "i-heroicons-arrow-right-on-rectangle",
   },
   {
-    label: "Laravel 11.x",
-    to: "https://laravel.com/docs/11.x",
-    target: "_blank",
-    icon: "i-heroicons-link-20-solid",
+    label: "Events",
+    to: "/events",
+    icon: "i-heroicons-arrow-right-on-rectangle",
+  },
+  {
+    label: "Subscribe to updates",
+    to: "/messages",
+    icon: "i-heroicons-arrow-right-on-rectangle",
+  },
+  {
+    label: "Accounts",
+    to: "/account/general",
+    icon: "i-heroicons-arrow-right-on-rectangle",
   },
 ];
 
@@ -76,7 +83,7 @@ defineShortcuts({
 
       <nav class="hidden lg:flex">
         <ul class="flex flex-col items-end lg:flex-row lg:items-center lg:gap-x-8">
-          <li v-for="item in navItems" class="relative">
+          <li v-for="item in navItems" class="relative" v-bind:key="item.label">
             <NuxtLink
               class="text-sm/6 font-semibold flex items-center gap-1 hover:text-primary"
               :to="item.to"
