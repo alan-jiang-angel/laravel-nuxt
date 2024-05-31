@@ -4,6 +4,7 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UploadController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\AdminEventsController;
 
 Route::get('/', function () {
     return ['ok' => true, 'message' => 'Welcome to the API'];
@@ -32,4 +33,6 @@ Route::prefix('api/v1')->group(function () {
             Route::post('upload', [UploadController::class, 'image'])->name('upload.image');
         });
     });
+
+    Route::resource('events', AdminEventsController::class);
 });
