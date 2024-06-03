@@ -34,22 +34,22 @@ const userItems = [
 const navItems = [
   {
     label: "My publications",
-    to: "/publications",
+    to: "/admin/publications",
     icon: "i-heroicons-arrow-right-on-rectangle",
   },
   {
     label: "Customer Reviews",
-    to: "/publications",
+    to: "/admin/reviews",
     icon: "i-heroicons-arrow-right-on-rectangle",
   },
   {
     label: "Events",
-    to: "/events",
+    to: "/admin/events",
     icon: "i-heroicons-arrow-right-on-rectangle",
   },
   {
     label: "Subscribe to updates",
-    to: "/messages",
+    to: "/admin/messages",
     icon: "i-heroicons-arrow-right-on-rectangle",
   },
   {
