@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Models\Publication;
@@ -11,9 +12,14 @@ class PublicationsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        return response()->json(Publication::paginate(10)); 
+        $page = $request->get("page", 1);
+        $limit = $request->get("limit", 5);
+        return response()->json([
+            'total' => Publication::all()->count(),
+            'data' => Publication::latest()->forPage($page, $limit)->get()
+        ]);
     }
 
     /**
