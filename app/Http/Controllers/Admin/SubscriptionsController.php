@@ -5,15 +5,30 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Models\Subscription;
+use App\Http\Controllers\Controller;
 
 class SubscriptionsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        return response()->json(Subscription::paginate(10)); 
+        $page = $request->get("page", 1);
+        $limit = $request->get("limit", 5);
+        return response()->json([
+            'total' => Subscription::all()->count(),
+            'data' => Subscription::latest()->forPage($page, $limit)->get()
+        ]);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id): JsonResponse
+    {
+        $sub = Subscription::findOrFail($id);
+        return response()->json($sub);
     }
 
     /**
@@ -32,22 +47,13 @@ class SubscriptionsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id): JsonResponse
-    {
-        $sub = Subscription::findOrFail($id);
-        return response()->json($sub);
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id): JsonResponse
     {
         $sub = Subscription::findOrFail($id);
         $sub->update(
-            $request->only(['title', 'pub_date', 'description', 'image', 'platform', 'link', 'views', 'likes', 'comments', 'favs'])
+            $request->only(['email', 'description'])
         );
 
         return response()->json([
@@ -67,6 +73,15 @@ class SubscriptionsController extends Controller
         return response()->json([
             'ok' => true
         ]);
-        //
+    }
+
+    public function deleteItems(Request $request): JsonResponse
+    {
+        $items = $request->get('items');
+        Subscription::destroy($items);
+        return response()->json([
+            'ok' => true,
+            'data' => $items
+        ]);
     }
 }
