@@ -4,7 +4,10 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UploadController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\AdminEventsController;
+use App\Http\Controllers\Admin\EventsController;
+use App\Http\Controllers\Admin\ReviewsController;
+use App\Http\Controllers\Admin\SubscriptionsController;
+use App\Http\Controllers\Admin\PublicationsController;
 
 Route::get('/', function () {
     return ['ok' => true, 'message' => 'Welcome to the API'];
@@ -34,5 +37,9 @@ Route::prefix('api/v1')->group(function () {
         });
     });
 
-    Route::resource('events', AdminEventsController::class);
+    Route::resource('events', EventsController::class);
+    Route::resource('reviews', ReviewsController::class);
+    Route::post('messages/items', [SubscriptionsController::class, 'deleteItems'])->name('messages.deleteItems');
+    Route::resource('messages', SubscriptionsController::class);
+    Route::resource('publications', PublicationsController::class);
 });
