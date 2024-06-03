@@ -2,16 +2,24 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Http\JsonResponse;
+use App\Models\CustomerReview;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class AdminReviewsController extends Controller
+class ReviewsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request): JsonResponse
     {
-        //
+        $page = $request->get("page", 1);
+        $limit = $request->get("limit", 5);
+        return response()->json([
+            'total' => CustomerReview::all()->count(),
+            'data' => CustomerReview::latest()->forPage($page, $limit)->get()
+        ]);
     }
 
     /**
@@ -25,17 +33,24 @@ class AdminReviewsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
-        //
+        $review = CustomerReview::create(
+            $request->only(['review_types', 'name', 'position', 'photo', 'review'])
+        );
+
+        return response()->json([
+            'ok' => true,
+            'data' => $review
+        ]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(CustomerReview $review)
     {
-        //
+        return $review;
     }
 
     /**
@@ -57,8 +72,13 @@ class AdminReviewsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): JsonResponse
     {
-        //
+        $review = CustomerReview::findOrFail($id);
+        $review->delete();
+
+        return response()->json([
+            'ok' => true
+        ]);
     }
 }
